@@ -171,7 +171,7 @@ function Home(): JSX.Element {
         <main className="flex flex-col gap-16 py-10 w-[90vw] mx-auto">
           <section className="w-full bg-opacity-50 bg-[#0a0a20] backdrop-filter backdrop-blur-lg rounded-3xl p-12 shadow-2xl border border-[#2a2a4a]/30 transform hover:scale-[1.02] transition-all duration-300">
             <h1 className="text-5xl font-bold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#7b68ee] to-[#00ced1] mb-6">Explore the Cosmos of Green Transport</h1>
-            <p className="text-[#8080a0] mb-8 text-xl leading-relaxed max-w-3xl">Join us in creating a sustainable future that's as vast and beautiful as the universe itself. Together, we can reach for the stars while keeping our planet green.</p>
+            <p className="text-[#8080a0] mb-8 text-xl leading-relaxed max-w-3xl">Join us in creating a sustainable future that&apos; as vast and beautiful as the universe itself. Together, we can reach for the stars while keeping our planet green.</p>
             <div className="flex gap-6 mb-8">
               <div className="flex items-center gap-3 text-[#ff69b4]">
                 <FaLeaf className="text-2xl" />
