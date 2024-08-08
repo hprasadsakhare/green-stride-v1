@@ -32,9 +32,13 @@ import {
   createWallet,
   walletConnect,
   inAppWallet,
-} from "thirdweb/wallets";
+} from "thirdweb/wallets";   
 import Popup from './popup';
 
+type latLng = {
+  lat : number;
+  lng :number;
+}
 function Home(): JSX.Element {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
@@ -67,8 +71,7 @@ function Home(): JSX.Element {
   const [distance, setDistance] = useState<string>('');   
   const [showPopup, setShowPopup] = useState(false);
   const [duration, setDuration] = useState<string>('');
-  const   
- [userLocation, setUserLocation] = useState<google.maps.LatLng | null>(null);
+  const [userLocation, setUserLocation] = useState<latLng | null>(null);
 
   const originRef = useRef<HTMLInputElement>(null);
   const destinationRef = useRef<HTMLInputElement>(null);
