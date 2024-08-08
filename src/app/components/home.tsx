@@ -34,9 +34,11 @@ import {
   walletConnect,
   inAppWallet,
 } from "thirdweb/wallets";
-import RewardTokenContract from '../../../utils/contracts/RewardTokenContract';
-import { LatLng } from "google.maps"
 
+type latLng = {
+  lat : number;
+  lng :number;
+}
 function Home(): JSX.Element {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
@@ -68,16 +70,15 @@ function Home(): JSX.Element {
   const [directionsResponse, setDirectionsResponse] = useState<google.maps.DirectionsResult | null>(null);
   const [distance, setDistance] = useState<string>('');   
 
-  const handleBlockchainCall = async()=> {
-    const response = await RewardTokenContract.methods.transferGreenTokens("").call();
-    console.log(response);
-  }
-
   const [duration, setDuration] = useState<string>('');
-  const [userLocation, setUserLocation] = useState<LatLng | null>(null);
+  const   
+ [userLocation, setUserLocation] = useState<google.maps.LatLng | null>(null);
+
   const originRef = useRef<HTMLInputElement>(null);
   const destinationRef = useRef<HTMLInputElement>(null);
-
+  const handleClaimReward = () => {
+    setShowPopup(!showPopup);
+  };
   const calculateRoute = useCallback(async () => {
     if (!isLoaded || !originRef.current?.value || !destinationRef.current?.value) {
       return;
@@ -132,6 +133,7 @@ function Home(): JSX.Element {
   }, []);
   
   return (
+
     <div className="min-h-screen w-full flex items-center flex-col mx-auto animate-fadeIn bg-[#030308] text-[#b0b0cc] overflow-hidden relative">
       {/* Animated background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#050510] via-[#030308] to-[#020204] z-0"></div>
@@ -141,7 +143,13 @@ function Home(): JSX.Element {
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#00ced1] rounded-full mix-blend-screen filter blur-xl animate-blob animation-delay-4000"></div>
         <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#ffa500] rounded-full mix-blend-screen filter blur-xl animate-blob"></div>
       </div>
-      
+     {showPopup && (
+  <Popup 
+    tokens={distanceNumber} 
+    onClose={() => setShowPopup(false)}
+    closePopup={handleClaimReward}
+  />
+)}
       {/* Content */}
       <div className="relative z-10 w-full">
         <header className="flex justify-between items-center bg-opacity-50 bg-[#0a0a20] backdrop-filter backdrop-blur-lg p-6 rounded-3xl shadow-2xl mb-10 sticky top-5 z-50 transition-all duration-300 ease-in-out hover:shadow-[#7b68ee]/10 w-[90vw] mx-auto border border-[#2a2a4a]/30">
@@ -167,7 +175,7 @@ function Home(): JSX.Element {
         <main className="flex flex-col gap-16 py-10 w-[90vw] mx-auto">
           <section className="w-full bg-opacity-50 bg-[#0a0a20] backdrop-filter backdrop-blur-lg rounded-3xl p-12 shadow-2xl border border-[#2a2a4a]/30 transform hover:scale-[1.02] transition-all duration-300">
             <h1 className="text-5xl font-bold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#7b68ee] to-[#00ced1] mb-6">Explore the Cosmos of Green Transport</h1>
-            <p className="text-[#8080a0] mb-8 text-xl leading-relaxed max-w-3xl">Join us in creating a sustainable future that's as vast and beautiful as the universe itself. Together, we can reach for the stars while keeping our planet green.</p>
+            <p className="text-[#8080a0] mb-8 text-xl leading-relaxed max-w-3xl">Join us in creating a sustainable future that&apos; as vast and beautiful as the universe itself. Together, we can reach for the stars while keeping our planet green.</p>
             <div className="flex gap-6 mb-8">
               <div className="flex items-center gap-3 text-[#ff69b4]">
                 <FaLeaf className="text-2xl" />
@@ -340,13 +348,15 @@ function Home(): JSX.Element {
                   </label>
                 </div>
               </div>
-              <button onClick={handleBlockchainCall} className="w-full mt-8 bg-gradient-to-r from-[#7b68ee] via-[#00ced1] to-[#ff69b4] text-[#030308] py-4 px-6 rounded-xl text-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-[#7b68ee]/20 transform hover:-translate-y-1">
+              <button className="w-full mt-8 bg-gradient-to-r from-[#7b68ee] via-[#00ced1] to-[#ff69b4] text-[#030308] py-4 px-6 rounded-xl text-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-[#7b68ee]/20 transform hover:-translate-y-1">
                 Claim Your Green Reward
               </button>
             </section>
           </div>
+
         </main>
       </div>
+      
     </div>
   );
 }

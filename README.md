@@ -57,3 +57,5 @@ yarn start
 ## Need help?
 
 For help or feedback, please [visit our support site](https://thirdweb.com/support)
+
+## Hacker House Goa

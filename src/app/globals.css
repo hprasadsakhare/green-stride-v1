@@ -20,3 +20,29 @@
 		@apply bg-zinc-950 text-neutral-200;
 	}
 }
+@layer utilities {
+	.coin-1 { top: 10%; left: 10%; animation-delay: 0.5s; }
+	.coin-2 { top: 20%; right: 15%; animation-delay: 0.8s; }
+	.coin-3 { bottom: 15%; left: 20%; animation-delay: 1.2s; }
+	.coin-4 { bottom: 25%; right: 25%; animation-delay: 1.5s; }
+	.coin-5 { top: 40%; left: 5%; animation-delay: 0.3s; }
+	.coin-6 { top: 60%; right: 10%; animation-delay: 1s; }
+	.coin-7 { bottom: 10%; left: 40%; animation-delay: 0.7s; }
+	.coin-8 { top: 30%; right: 35%; animation-delay: 1.3s; }
+	.coin-9 { bottom: 35%; left: 15%; animation-delay: 0.9s; }
+	.coin-10 { top: 50%; right: 20%; animation-delay: 0.2s; }
+  }
+  @keyframes orbit1 {
+	0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+	100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+  }
+  
+  @keyframes orbit2 {
+	0% { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+	100% { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+  }
+  
+  @keyframes orbit3 {
+	0% { transform: rotate(0deg) translateX(200px) rotate(0deg); }
+	100% { transform: rotate(360deg) translateX(200px) rotate(-360deg); }
+  }
