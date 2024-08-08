@@ -7,12 +7,5 @@ const nextConfig = {
   },
 };
 
-module.exports = {
-  webpack: (config) => {
-    config.externals = [...config.externals, { "google": "google" }];
-    return config;
-  },
-};
-
 
 export default nextConfig;
