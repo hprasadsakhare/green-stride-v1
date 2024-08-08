@@ -33,6 +33,7 @@ import {
   walletConnect,
   inAppWallet,
 } from "thirdweb/wallets";
+import Popup from './popup';
 
 function Home(): JSX.Element {
   const { isLoaded } = useJsApiLoader({
@@ -64,14 +65,16 @@ function Home(): JSX.Element {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [directionsResponse, setDirectionsResponse] = useState<google.maps.DirectionsResult | null>(null);
   const [distance, setDistance] = useState<string>('');   
-
+  const [showPopup, setShowPopup] = useState(false);
   const [duration, setDuration] = useState<string>('');
   const   
  [userLocation, setUserLocation] = useState<google.maps.LatLng | null>(null);
 
   const originRef = useRef<HTMLInputElement>(null);
   const destinationRef = useRef<HTMLInputElement>(null);
-
+  const handleClaimReward = () => {
+    setShowPopup(!showPopup);
+  };
   const calculateRoute = useCallback(async () => {
     if (!isLoaded || !originRef.current?.value || !destinationRef.current?.value) {
       return;
@@ -126,6 +129,7 @@ function Home(): JSX.Element {
   }, []);
   
   return (
+
     <div className="min-h-screen w-full flex items-center flex-col mx-auto animate-fadeIn bg-[#030308] text-[#b0b0cc] overflow-hidden relative">
       {/* Animated background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#050510] via-[#030308] to-[#020204] z-0"></div>
@@ -135,7 +139,13 @@ function Home(): JSX.Element {
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#00ced1] rounded-full mix-blend-screen filter blur-xl animate-blob animation-delay-4000"></div>
         <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#ffa500] rounded-full mix-blend-screen filter blur-xl animate-blob"></div>
       </div>
-      
+     {showPopup && (
+  <Popup 
+    tokens={distanceNumber} 
+    onClose={() => setShowPopup(false)}
+    closePopup={handleClaimReward}
+  />
+)}
       {/* Content */}
       <div className="relative z-10 w-full">
         <header className="flex justify-between items-center bg-opacity-50 bg-[#0a0a20] backdrop-filter backdrop-blur-lg p-6 rounded-3xl shadow-2xl mb-10 sticky top-5 z-50 transition-all duration-300 ease-in-out hover:shadow-[#7b68ee]/10 w-[90vw] mx-auto border border-[#2a2a4a]/30">
@@ -334,13 +344,19 @@ function Home(): JSX.Element {
                   </label>
                 </div>
               </div>
-              <button className="w-full mt-8 bg-gradient-to-r from-[#7b68ee] via-[#00ced1] to-[#ff69b4] text-[#030308] py-4 px-6 rounded-xl text-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-[#7b68ee]/20 transform hover:-translate-y-1">
-                Claim Your Green Reward
-              </button>
+              <button 
+  className="w-full mt-8 bg-gradient-to-r from-[#7b68ee] via-[#00ced1] to-[#ff69b4] text-[#030308] py-4 px-6 rounded-xl text-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-[#7b68ee]/20 transform hover:-translate-y-1"
+  onClick={handleClaimReward}
+>
+  Claim Your Green Reward
+</button>
+
             </section>
           </div>
+
         </main>
       </div>
+      
     </div>
   );
 }
