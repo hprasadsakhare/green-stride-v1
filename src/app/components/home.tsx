@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createThirdwebClient } from 'thirdweb';
+
 import {
   useJsApiLoader,
   GoogleMap,
@@ -33,6 +34,8 @@ import {
   walletConnect,
   inAppWallet,
 } from "thirdweb/wallets";
+import RewardTokenContract from '../../../utils/contracts/RewardTokenContract';
+import { LatLng } from "google.maps"
 
 function Home(): JSX.Element {
   const { isLoaded } = useJsApiLoader({
@@ -65,10 +68,13 @@ function Home(): JSX.Element {
   const [directionsResponse, setDirectionsResponse] = useState<google.maps.DirectionsResult | null>(null);
   const [distance, setDistance] = useState<string>('');   
 
-  const [duration, setDuration] = useState<string>('');
-  const   
- [userLocation, setUserLocation] = useState<google.maps.LatLng | null>(null);
+  const handleBlockchainCall = async()=> {
+    const response = await RewardTokenContract.methods.transferGreenTokens("").call();
+    console.log(response);
+  }
 
+  const [duration, setDuration] = useState<string>('');
+  const [userLocation, setUserLocation] = useState<LatLng | null>(null);
   const originRef = useRef<HTMLInputElement>(null);
   const destinationRef = useRef<HTMLInputElement>(null);
 
@@ -334,7 +340,7 @@ function Home(): JSX.Element {
                   </label>
                 </div>
               </div>
-              <button className="w-full mt-8 bg-gradient-to-r from-[#7b68ee] via-[#00ced1] to-[#ff69b4] text-[#030308] py-4 px-6 rounded-xl text-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-[#7b68ee]/20 transform hover:-translate-y-1">
+              <button onClick={handleBlockchainCall} className="w-full mt-8 bg-gradient-to-r from-[#7b68ee] via-[#00ced1] to-[#ff69b4] text-[#030308] py-4 px-6 rounded-xl text-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-[#7b68ee]/20 transform hover:-translate-y-1">
                 Claim Your Green Reward
               </button>
             </section>
